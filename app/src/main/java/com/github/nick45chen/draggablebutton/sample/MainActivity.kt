@@ -1,6 +1,7 @@
 package com.github.nick45chen.draggablebutton.sample
 
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -34,6 +35,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        // Calculate center-right position based on screen size
+        val displayMetrics = resources.displayMetrics
+        val screenWidth = displayMetrics.widthPixels.toFloat()
+        val screenHeight = displayMetrics.heightPixels.toFloat()
+        
+        val buttonSize = 150f // Button size in pixels
+        val rightMargin = 32f // Distance from right edge
+        val centerRightX = screenWidth - buttonSize - rightMargin
+        val centerRightY = (screenHeight - buttonSize) / 2f
+
         // Create draggable button manager with builder pattern
         draggableButtonManager = DraggableButtonManager.builder(this@MainActivity)
             .setClickListener {
@@ -51,9 +62,9 @@ class MainActivity : ComponentActivity() {
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
-            .setSize(100, 100)
+            .setSize(150, 150)
             .setScope(ButtonScope.ACTIVITY)
-            .setInitialPosition(200f, 200f)
+            .setInitialPosition(centerRightX, centerRightY)
             .build()
 
         setContent {
