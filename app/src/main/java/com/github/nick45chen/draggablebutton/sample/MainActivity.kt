@@ -25,11 +25,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.nick45chen.draggablebutton.DraggableButton
 import com.github.nick45chen.draggablebutton.DraggableButtonCallback
+import com.github.nick45chen.draggablebutton.DraggableButtonManager
 import com.github.nick45chen.draggablebutton.sample.ui.theme.DraggableButtonSampleTheme
 
 class MainActivity : ComponentActivity() {
     
-    private var draggableButtonManager: com.github.nick45chen.draggablebutton.DraggableButtonManager? = null
+    private var draggableButtonManager: DraggableButtonManager? = null
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +42,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             DraggableButtonSampleTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    DraggableButtonDemo(modifier = Modifier.padding(innerPadding))
+                    DraggableButtonDemo(
+                        modifier = Modifier.padding(innerPadding),
+                        buttonManager = draggableButtonManager
+                    )
                 }
             }
         }
@@ -81,7 +85,10 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun DraggableButtonDemo(modifier: Modifier = Modifier) {
+fun DraggableButtonDemo(
+    modifier: Modifier = Modifier,
+    buttonManager: DraggableButtonManager? = null
+) {
     var isButtonVisible by remember { mutableStateOf(true) }
     
     Column(
@@ -109,12 +116,14 @@ fun DraggableButtonDemo(modifier: Modifier = Modifier) {
         
         Button(
             onClick = {
-                if (isButtonVisible) {
-                    DraggableButton.hide()
-                } else {
-                    DraggableButton.show()
+                buttonManager?.let { manager ->
+                    if (isButtonVisible) {
+                        manager.hide()
+                    } else {
+                        manager.show()
+                    }
+                    isButtonVisible = !isButtonVisible
                 }
-                isButtonVisible = !isButtonVisible
             }
         ) {
             Text(if (isButtonVisible) "Hide Button" else "Show Button")
