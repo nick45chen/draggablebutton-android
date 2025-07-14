@@ -1,7 +1,6 @@
 package com.github.nick45chen.draggablebutton.sample
 
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Star
@@ -26,10 +24,6 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -118,7 +112,7 @@ class MainActivity : ComponentActivity() {
                         onShowCustom = { customButtonManager?.show() },
                         onShowDefault = { defaultButtonManager?.show() },
                         onShowStar = { starButtonManager?.show() },
-                        onHideAll = { 
+                        onHideAll = {
                             customButtonManager?.hide()
                             defaultButtonManager?.hide()
                             starButtonManager?.hide()
@@ -145,8 +139,6 @@ fun SampleContent(
     onShowStar: () -> Unit,
     onHideAll: () -> Unit
 ) {
-    var dragEventCount by remember { mutableStateOf(0) }
-    
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -181,9 +173,9 @@ fun SampleContent(
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold
                 )
-                
+
                 Spacer(modifier = Modifier.height(12.dp))
-                
+
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier.fillMaxWidth()
@@ -194,7 +186,7 @@ fun SampleContent(
                     ) {
                         Text("Custom ➕", fontSize = MaterialTheme.typography.bodySmall.fontSize)
                     }
-                    
+
                     Button(
                         onClick = onShowDefault,
                         modifier = Modifier.weight(1f)
@@ -202,7 +194,7 @@ fun SampleContent(
                         Text("Default ⚪", fontSize = MaterialTheme.typography.bodySmall.fontSize)
                     }
                 }
-                
+
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier.fillMaxWidth()
@@ -213,7 +205,7 @@ fun SampleContent(
                     ) {
                         Text("Star ⭐", fontSize = MaterialTheme.typography.bodySmall.fontSize)
                     }
-                    
+
                     OutlinedButton(
                         onClick = onHideAll,
                         modifier = Modifier.weight(1f)
@@ -236,9 +228,9 @@ fun SampleContent(
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 Text(
                     text = "• Tap: Shows toast message\n" +
                             "• Drag: Move around the screen\n" +
@@ -262,9 +254,9 @@ fun SampleContent(
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 Text(
                     text = "• Builder pattern configuration\n" +
                             "• Custom Composable content\n" +
@@ -291,9 +283,9 @@ fun SampleContent(
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 Text(
                     text = "• Close target: Drag to red circle at bottom\n" +
                             "• Horizontal: >50% width crosses screen edge\n" +
