@@ -6,6 +6,12 @@
 
 A modern, feature-rich Android library that provides floating draggable buttons with Jetpack Compose support. Perfect for creating intuitive floating action buttons, quick access controls, or interactive overlay elements.
 
+## 🎬 Demo
+
+https://github.com/user-attachments/assets/demo.mp4
+
+*Watch the draggable button in action: drag interactions, close target behavior, boundary disposal, and multiple button configurations.*
+
 ## ✨ Features
 
 ### 🎯 Core Functionality
@@ -266,7 +272,7 @@ The sample app demonstrates **all public APIs** in a single screen for quick und
 ./gradlew :app:installDebug
 ```
 
-**📹 Demo Recording**: *To be added - record the sample app showing drag interactions, close target behavior, and boundary disposal for a visual preview.*
+**📹 Demo Recording**: See the [Demo section](#-demo) above for a complete visual walkthrough of all features.
 
 ## 🤝 Contributing
 
