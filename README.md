@@ -244,18 +244,29 @@ DraggableButtonManager.builder(this)
 
 ## 📱 Sample App
 
-Check out the sample app in the `app` module for a complete implementation example with:
+The sample app demonstrates **all public APIs** in a single screen for quick understanding:
 
-- Basic button creation and management
-- Custom Composable content
-- Event handling demonstrations
-- Different configuration options
+### ✨ What You'll See
+- **Custom Content Button**: Add icon with all listeners configured
+- **Default Button**: Library's default appearance 
+- **Star Button**: Different size and custom styling
+- **Interactive Cards**: Clear explanations of each feature
 
-To run the sample:
+### 🎬 Features Demonstrated
+- Builder pattern configuration
+- Click, drag, and dispose listeners
+- Custom Composable content vs default appearance
+- Different sizes and positions
+- Close target disposal (drag to red circle)
+- Boundary disposal (drag past edges)
+- Safe area handling
 
+### 🚀 Quick Start
 ```bash
 ./gradlew :app:installDebug
 ```
+
+**📹 Demo Recording**: *To be added - record the sample app showing drag interactions, close target behavior, and boundary disposal for a visual preview.*
 
 ## 🤝 Contributing
 
