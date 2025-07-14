@@ -16,13 +16,18 @@ class DragController(
     private val disposeCallback: (() -> Unit)? = null,
     initialPosition: Position = Position(0f, 0f),
     private val buttonWidth: Int = 100,
-    private val buttonHeight: Int = 100
+    private val buttonHeight: Int = 100,
+    private val density: Float = 3f // Density for dp to px conversion
 ) {
     
     var currentPosition by mutableStateOf(initialPosition)
         private set
     
-    private var isDragging = false
+    var isDragging by mutableStateOf(false)
+        private set
+    
+    var isOverlappingCloseTarget by mutableStateOf(false)
+        private set
     private var dragStartPosition = Position(0f, 0f)
     private var lastPosition = Position(0f, 0f)
     private var clickThreshold = 10f // pixels
@@ -128,6 +133,9 @@ class DragController(
                     // During drag, allow movement outside safe area
                     currentPosition = newPosition
                     
+                    // Check overlap with close target while dragging
+                    checkCloseTargetOverlap()
+                    
                     dragListener?.invoke(
                         DragEvent(
                             position = currentPosition,
@@ -142,10 +150,14 @@ class DragController(
             MotionEvent.ACTION_UP -> {
                 if (isDragging) {
                     // Check disposal conditions:
-                    // Horizontal: >50% of width crosses screen edge
-                    // Vertical: Any part moves outside safe area
-                    if (shouldDisposeButton(currentPosition)) {
-                        // Dispose the button
+                    // 1. Button released over close target (priority)
+                    // 2. Horizontal: >50% of width crosses screen edge
+                    // 3. Vertical: Any part moves outside safe area
+                    if (isOverlappingCloseTarget) {
+                        // Dispose the button - released over close target
+                        disposeCallback?.invoke()
+                    } else if (shouldDisposeButton(currentPosition)) {
+                        // Dispose the button - boundary disposal
                         disposeCallback?.invoke()
                     } else {
                         // Constrain back to safe area if partially outside
@@ -165,6 +177,7 @@ class DragController(
                 }
                 
                 isDragging = false
+                isOverlappingCloseTarget = false
                 return true
             }
         }
@@ -180,7 +193,46 @@ class DragController(
     }
     
     /**
-     * Returns true if currently dragging.
+     * Checks if the button overlaps with the close target.
+     * Close target is positioned at the bottom center of the screen.
      */
-    fun isDragging(): Boolean = isDragging
+    private fun checkCloseTargetOverlap() {
+        val bounds = screenBounds ?: return
+        
+        // Close target specs: 80dp size, bottom center position
+        val closeTargetSize = 80f * density
+        val closeTargetX = (bounds.right - bounds.left) / 2f - closeTargetSize / 2f
+        val closeTargetY = bounds.bottom - closeTargetSize - (100f * density) // 100dp from bottom
+        
+        // Button bounds
+        val buttonCenterX = currentPosition.x + buttonWidth / 2f
+        val buttonCenterY = currentPosition.y + buttonHeight / 2f
+        
+        // Close target bounds
+        val closeTargetCenterX = closeTargetX + closeTargetSize / 2f
+        val closeTargetCenterY = closeTargetY + closeTargetSize / 2f
+        
+        // Calculate distance between centers
+        val deltaX = buttonCenterX - closeTargetCenterX
+        val deltaY = buttonCenterY - closeTargetCenterY
+        val distance = kotlin.math.sqrt(deltaX * deltaX + deltaY * deltaY)
+        
+        // Consider overlapping if distance is less than combined radii
+        val buttonRadius = kotlin.math.min(buttonWidth, buttonHeight) / 2f
+        val closeTargetRadius = closeTargetSize / 2f
+        
+        isOverlappingCloseTarget = distance < (buttonRadius + closeTargetRadius)
+    }
+    
+    /**
+     * Gets the close target position for rendering.
+     */
+    fun getCloseTargetPosition(): Position? {
+        val bounds = screenBounds ?: return null
+        val closeTargetSize = 80f * density
+        return Position(
+            x = (bounds.right - bounds.left) / 2f - closeTargetSize / 2f,
+            y = bounds.bottom - closeTargetSize - (100f * density)
+        )
+    }
 }

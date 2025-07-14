@@ -36,7 +36,8 @@ class ActivityOverlayManager(
             disposeCallback = { dispose() },
             initialPosition = configuration.initialPosition,
             buttonWidth = configuration.width,
-            buttonHeight = configuration.height
+            buttonHeight = configuration.height,
+            density = activity.resources.displayMetrics.density
         )
         
         // Calculate safe area bounds
