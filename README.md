@@ -1,6 +1,6 @@
 # DraggableButton Android Library
 
-[![](https://jitpack.io/v/nick45chen/DraggableButton-Android.svg)](https://jitpack.io/#nick45chen/DraggableButton-Android)
+[![](https://jitpack.io/v/nick45chen/draggablebutton-android.svg)](https://jitpack.io/#nick45chen/draggablebutton-android)
 [![API](https://img.shields.io/badge/API-31%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=31)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0.21-blue.svg?style=flat&logo=kotlin)](https://kotlinlang.org)
 
@@ -59,7 +59,7 @@ Add the dependency to your app `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("com.github.nick45chen:DraggableButton-Android:1.0.0")
+    implementation("com.github.nick45chen:draggablebutton-android:1.0.1")
 }
 ```
 
@@ -290,7 +290,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🛠️ Build Information
 
-- **Library Version**: 1.0.0
+- **Library Version**: 1.0.1
 - **Kotlin Version**: 2.0.21
 - **Android Gradle Plugin**: 8.11.1
 - **Compose BOM**: 2024.09.00
@@ -301,7 +301,7 @@ If you have any questions or issues, please:
 
 1. Check the [sample app](app/) for usage examples
 2. Review the [API documentation](#-api-reference)
-3. Open an [issue](https://github.com/nick45chen/DraggableButton-Android/issues) on GitHub
+3. Open an [issue](https://github.com/nick45chen/draggablebutton-android/issues) on GitHub
 
 ---
 
