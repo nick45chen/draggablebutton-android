@@ -39,7 +39,7 @@ fun DraggableButtonCompose(
             .touchHandler(dragController)
     ) {
         if (configuration.composeContent != null) {
-            // Wrap custom content in a FloatingActionButton
+            // Custom content provided - wrap it in a FloatingActionButton
             FloatingActionButton(
                 onClick = { /* Handled by touch handler */ },
                 modifier = Modifier.size(widthDp, heightDp),
@@ -49,7 +49,7 @@ fun DraggableButtonCompose(
                 configuration.composeContent.invoke()
             }
         } else {
-            // Default FAB-like appearance
+            // No custom content - use default appearance
             DefaultDraggableButton(
                 modifier = Modifier.size(widthDp, heightDp)
             )
