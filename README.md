@@ -8,7 +8,7 @@ A modern, feature-rich Android library that provides floating draggable buttons 
 
 ## 🎬 Demo
 
-https://github.com/user-attachments/assets/demo.mp4
+https://github.com/nick45chen/draggablebutton-android/raw/main/demo.mp4
 
 *Watch the draggable button in action: drag interactions, close target behavior, boundary disposal, and multiple button configurations.*
 
