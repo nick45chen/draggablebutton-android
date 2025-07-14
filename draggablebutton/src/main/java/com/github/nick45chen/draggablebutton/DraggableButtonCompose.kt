@@ -8,7 +8,9 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -18,6 +20,7 @@ import kotlin.math.roundToInt
  * Composable that renders the draggable button with touch handling.
  * Follows Separation of Concerns by handling only UI rendering.
  */
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun DraggableButtonCompose(
     configuration: DraggableButtonConfiguration,
@@ -57,7 +60,9 @@ fun DraggableButtonCompose(
                     )
                 }
                 .size(widthDp, heightDp)
-                .touchHandler(dragController)
+                .pointerInteropFilter { event ->
+                    dragController.handleTouchEvent(event)
+                }
         ) {
             if (configuration.composeContent != null) {
                 // Custom content provided - wrap it in a FloatingActionButton

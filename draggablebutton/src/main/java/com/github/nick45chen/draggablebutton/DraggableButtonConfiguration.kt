@@ -12,17 +12,8 @@ data class DraggableButtonConfiguration(
     val composeContent: (@Composable () -> Unit)? = null,
     val width: Int = 100,
     val height: Int = 100,
-    val scope: ButtonScope = ButtonScope.ACTIVITY,
     val initialPosition: Position = Position(0f, 0f)
 )
-
-/**
- * Represents the scope/lifetime of the draggable button.
- */
-enum class ButtonScope {
-    /** Button is tied to a single Activity lifecycle */
-    ACTIVITY
-}
 
 /**
  * Represents a position with x and y coordinates.

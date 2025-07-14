@@ -17,15 +17,16 @@ import androidx.core.view.WindowInsetsCompat
  * Uses the Activity's content view as the overlay container.
  */
 class ActivityOverlayManager(
-    context: Context,
-    configuration: DraggableButtonConfiguration
-) : OverlayManager(context, configuration) {
+    private val context: Context,
+    private val configuration: DraggableButtonConfiguration
+) {
     
     private val activity = context as Activity
     private var composeView: ComposeView? = null
     private var dragController: DragController? = null
+    private var isShowing = false
     
-    override fun show() {
+    fun show() {
         if (isShowing) return
         
         val contentView = activity.findViewById<ViewGroup>(android.R.id.content)
@@ -63,7 +64,7 @@ class ActivityOverlayManager(
         isShowing = true
     }
     
-    override fun hide() {
+    fun hide() {
         if (!isShowing) return
         
         composeView?.let { view ->
@@ -74,13 +75,15 @@ class ActivityOverlayManager(
         isShowing = false
     }
     
-    override fun dispose() {
+    fun dispose() {
         hide()
         composeView = null
         dragController = null
         // Notify that the button was disposed
         configuration.disposeListener?.invoke()
     }
+    
+    fun isVisible(): Boolean = isShowing
     
     /**
      * Calculates the safe area bounds considering system UI insets.

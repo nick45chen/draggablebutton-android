@@ -22,7 +22,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.nick45chen.draggablebutton.ButtonScope
 import com.github.nick45chen.draggablebutton.DragEvent
 import com.github.nick45chen.draggablebutton.DraggableButtonManager
 import com.github.nick45chen.draggablebutton.sample.ui.theme.DraggableButtonSampleTheme
@@ -66,7 +65,6 @@ class MainActivity : ComponentActivity() {
                 )
             }
             .setSize(150, 150)
-            .setScope(ButtonScope.ACTIVITY)
             .setInitialPosition(centerRightX, centerRightY)
             .build()
 

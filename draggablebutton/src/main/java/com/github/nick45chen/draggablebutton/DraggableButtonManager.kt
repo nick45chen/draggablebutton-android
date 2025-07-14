@@ -13,7 +13,7 @@ class DraggableButtonManager private constructor(
     private val configuration: DraggableButtonConfiguration
 ) {
     
-    private var overlayManager: OverlayManager? = null
+    private var overlayManager: ActivityOverlayManager? = null
     private var isShowing = false
     
     /**
@@ -26,7 +26,6 @@ class DraggableButtonManager private constructor(
         private var composeContent: (@Composable () -> Unit)? = null
         private var width: Int = 100
         private var height: Int = 100
-        private var scope: ButtonScope = ButtonScope.ACTIVITY
         private var initialPosition: Position = Position(0f, 0f)
         
         fun setClickListener(listener: () -> Unit): Builder {
@@ -55,11 +54,6 @@ class DraggableButtonManager private constructor(
             return this
         }
         
-        fun setScope(scope: ButtonScope): Builder {
-            this.scope = scope
-            return this
-        }
-        
         fun setInitialPosition(x: Float, y: Float): Builder {
             this.initialPosition = Position(x, y)
             return this
@@ -73,7 +67,6 @@ class DraggableButtonManager private constructor(
                 composeContent = composeContent,
                 width = width,
                 height = height,
-                scope = scope,
                 initialPosition = initialPosition
             )
             
