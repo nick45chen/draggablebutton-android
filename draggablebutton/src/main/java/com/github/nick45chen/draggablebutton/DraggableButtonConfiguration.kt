@@ -21,9 +21,7 @@ data class DraggableButtonConfiguration(
  */
 enum class ButtonScope {
     /** Button is tied to a single Activity lifecycle */
-    ACTIVITY,
-    /** Button is global and overlays the entire app */
-    GLOBAL
+    ACTIVITY
 }
 
 /**

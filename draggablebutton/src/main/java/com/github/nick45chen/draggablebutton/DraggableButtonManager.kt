@@ -87,10 +87,7 @@ class DraggableButtonManager private constructor(
     fun show() {
         if (isShowing) return
         
-        overlayManager = when (configuration.scope) {
-            ButtonScope.ACTIVITY -> ActivityOverlayManager(context, configuration)
-            ButtonScope.GLOBAL -> GlobalOverlayManager(context, configuration)
-        }
+        overlayManager = ActivityOverlayManager(context, configuration)
         
         overlayManager?.show()
         isShowing = true
