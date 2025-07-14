@@ -1,7 +1,6 @@
 package com.github.nick45chen.draggablebutton
 
 import android.graphics.drawable.Drawable
-import androidx.lifecycle.Lifecycle
 
 /**
  * Interface Segregation Principle: Separate interfaces for different responsibilities
@@ -29,8 +28,4 @@ interface DraggableButtonConfiguration {
     val isDraggable: Boolean
     val snapToEdge: Boolean
     val marginFromEdge: Int
-}
-
-interface LifecycleObserver {
-    fun onLifecycleChanged(lifecycle: Lifecycle.State)
 }
