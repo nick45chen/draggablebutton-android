@@ -11,6 +11,7 @@ import androidx.lifecycle.LifecycleOwner
  * Open/Closed Principle: Open for extension, closed for modification
  * Dependency Inversion Principle: Depends on abstractions, not concretions
  */
+@Suppress("unused")
 class DraggableButtonManager private constructor(
     private val activity: Activity,
     private val configuration: DraggableButtonConfiguration,
@@ -90,11 +91,6 @@ class DraggableButtonManager private constructor(
         if (isInitialized) {
             show()
         }
-    }
-
-    override fun onPause(owner: LifecycleOwner) {
-        super.onPause(owner)
-        // Keep button visible during pause (like when dialog appears)
     }
 
     override fun onDestroy(owner: LifecycleOwner) {
