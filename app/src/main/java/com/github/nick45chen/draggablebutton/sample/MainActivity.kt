@@ -54,6 +54,9 @@ class MainActivity : ComponentActivity() {
                 // Handle drag events if needed
                 // Toast.makeText(this, "Dragging: ${event.state}", Toast.LENGTH_SHORT).show()
             }
+            .setDisposeListener {
+                Toast.makeText(this, "Button auto-disposed!", Toast.LENGTH_SHORT).show()
+            }
             .setComposeContent {
                 // Custom content - FAB with add icon
                 Icon(
@@ -126,6 +129,14 @@ fun SampleContent(
             text = "You can drag the floating button around the screen and tap it to see a toast message.",
             style = MaterialTheme.typography.bodySmall,
             modifier = Modifier.padding(top = 32.dp)
+        )
+        
+        Text(
+            text = "💡 Auto-Dispose Rules:\n" +
+                    "• Horizontal: >50% of width crosses screen edge\n" +
+                    "• Vertical: Any part moves outside safe area (status/nav bars)",
+            style = MaterialTheme.typography.bodySmall,
+            modifier = Modifier.padding(top = 16.dp)
         )
     }
 }

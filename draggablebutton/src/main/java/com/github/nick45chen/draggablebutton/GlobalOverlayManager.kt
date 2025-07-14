@@ -34,6 +34,7 @@ class GlobalOverlayManager(
         dragController = DragController(
             dragListener = configuration.dragListener,
             clickListener = configuration.clickListener,
+            disposeCallback = { dispose() },
             initialPosition = configuration.initialPosition,
             buttonWidth = configuration.width,
             buttonHeight = configuration.height
@@ -85,6 +86,8 @@ class GlobalOverlayManager(
         hide()
         composeView = null
         dragController = null
+        // Notify that the button was disposed
+        configuration.disposeListener?.invoke()
     }
     
     private fun canDrawOverlays(): Boolean {

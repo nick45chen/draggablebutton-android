@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 data class DraggableButtonConfiguration(
     val clickListener: (() -> Unit)? = null,
     val dragListener: ((DragEvent) -> Unit)? = null,
+    val disposeListener: (() -> Unit)? = null,
     val composeContent: (@Composable () -> Unit)? = null,
     val width: Int = 100,
     val height: Int = 100,

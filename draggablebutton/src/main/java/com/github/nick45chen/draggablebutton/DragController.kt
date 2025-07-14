@@ -13,6 +13,7 @@ import kotlin.math.abs
 class DragController(
     private val dragListener: ((DragEvent) -> Unit)?,
     private val clickListener: (() -> Unit)?,
+    private val disposeCallback: (() -> Unit)? = null,
     initialPosition: Position = Position(0f, 0f),
     private val buttonWidth: Int = 100,
     private val buttonHeight: Int = 100
@@ -56,6 +57,35 @@ class DragController(
     }
     
     /**
+     * Checks if the button should be disposed based on position:
+     * - Horizontal: More than 50% of button width crosses screen edge
+     * - Vertical: Any part of button moves outside vertical safe area
+     */
+    private fun shouldDisposeButton(position: Position): Boolean {
+        val bounds = screenBounds ?: return false
+        
+        // Check horizontal boundaries (50% threshold)
+        val buttonRight = position.x + buttonWidth
+        val halfButtonWidth = buttonWidth / 2f
+        
+        // Check if more than 50% extends beyond the right edge
+        val rightOverlap = buttonRight - bounds.right
+        val rightExtension = if (rightOverlap > 0) rightOverlap else 0f
+        
+        // Check if more than 50% extends beyond the left edge
+        val leftOverlap = bounds.left - position.x
+        val leftExtension = if (leftOverlap > 0) leftOverlap else 0f
+        
+        val horizontalDisposal = rightExtension > halfButtonWidth || leftExtension > halfButtonWidth
+        
+        // Check vertical boundaries (immediate disposal if outside safe area)
+        val buttonBottom = position.y + buttonHeight
+        val verticalDisposal = position.y < bounds.top || buttonBottom > bounds.bottom
+        
+        return horizontalDisposal || verticalDisposal
+    }
+    
+    /**
      * Handles touch events and determines drag vs click behavior.
      */
     fun handleTouchEvent(event: MotionEvent): Boolean {
@@ -95,8 +125,8 @@ class DragController(
                         event.rawY - currentPosition.y
                     )
                     
-                    // Constrain to screen bounds
-                    currentPosition = constrainToBounds(newPosition)
+                    // During drag, allow movement outside safe area
+                    currentPosition = newPosition
                     
                     dragListener?.invoke(
                         DragEvent(
@@ -111,13 +141,24 @@ class DragController(
             
             MotionEvent.ACTION_UP -> {
                 if (isDragging) {
-                    dragListener?.invoke(
-                        DragEvent(
-                            position = currentPosition,
-                            velocity = Position(0f, 0f),
-                            state = DragState.END
+                    // Check disposal conditions:
+                    // Horizontal: >50% of width crosses screen edge
+                    // Vertical: Any part moves outside safe area
+                    if (shouldDisposeButton(currentPosition)) {
+                        // Dispose the button
+                        disposeCallback?.invoke()
+                    } else {
+                        // Constrain back to safe area if partially outside
+                        currentPosition = constrainToBounds(currentPosition)
+                        
+                        dragListener?.invoke(
+                            DragEvent(
+                                position = currentPosition,
+                                velocity = Position(0f, 0f),
+                                state = DragState.END
+                            )
                         )
-                    )
+                    }
                 } else {
                     // It's a click
                     clickListener?.invoke()

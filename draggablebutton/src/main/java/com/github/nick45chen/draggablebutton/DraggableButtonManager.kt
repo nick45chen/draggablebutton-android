@@ -22,6 +22,7 @@ class DraggableButtonManager private constructor(
     class Builder(private val context: Context) {
         private var clickListener: (() -> Unit)? = null
         private var dragListener: ((DragEvent) -> Unit)? = null
+        private var disposeListener: (() -> Unit)? = null
         private var composeContent: (@Composable () -> Unit)? = null
         private var width: Int = 100
         private var height: Int = 100
@@ -35,6 +36,11 @@ class DraggableButtonManager private constructor(
         
         fun setDragListener(listener: (DragEvent) -> Unit): Builder {
             this.dragListener = listener
+            return this
+        }
+        
+        fun setDisposeListener(listener: () -> Unit): Builder {
+            this.disposeListener = listener
             return this
         }
         
@@ -63,6 +69,7 @@ class DraggableButtonManager private constructor(
             val configuration = DraggableButtonConfiguration(
                 clickListener = clickListener,
                 dragListener = dragListener,
+                disposeListener = disposeListener,
                 composeContent = composeContent,
                 width = width,
                 height = height,
